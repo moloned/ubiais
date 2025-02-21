@@ -1,0 +1,10 @@
+[Unit]
+Description=Ubotica AIS SDR station Script - 20 Feb 2025
+After=network.target
+
+[Service]
+ExecStart=/usr/local/bin/ubiais-script.sh
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
