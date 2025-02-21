@@ -4,9 +4,9 @@
 # https://github.com/abcd567a/install-aiscatcher
 # https://docs.aiscatcher.org/installation/ubuntu-debian/
 #
-sudo apt update
-sudo apt upgrade
-sudo apt install git
+#sudo apt update
+#sudo apt upgrade
+#sudo apt install git
 #
 sudo bash -c "$(wget -O - https://raw.githubusercontent.com/abcd567a/install-aiscatcher/master/install-aiscatcher.sh)"
 #
