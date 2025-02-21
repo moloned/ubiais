@@ -1,99 +1,103 @@
-Ubiais
-Welcome to the Ubiais repository! This project is designed to [briefly describe the purpose of the project].
+Script Explanation
+This script automates the installation and setup of AIS-Catcher, a tool for decoding and capturing AIS (Automatic Identification System) data from ships. It also configures a system service (ubiais.service) to manage AIS-Catcher.
 
-Table of Contents
-Introduction
+Script Overview
+The script performs the following tasks:
 
-Features
+Updates and upgrades the system.
 
-Installation
+Installs Git.
 
-Usage
+Downloads and runs an installation script for AIS-Catcher.
 
-Contributing
+Tests the AIS-Catcher installation.
 
-License
+Compiles a utility (usbreset).
 
-Introduction
-[Provide a brief introduction to the project. Explain what it does, why it was created, and who it is for.]
+Copies configuration files and scripts to their respective locations.
 
-Features
-Feature 1: [Describe a key feature of the project.]
+Sets up and enables a system service (ubiais.service) to manage AIS-Catcher.
 
-Feature 2: [Describe another key feature.]
-
-Feature 3: [Add more features as needed.]
-
-Installation
-Follow these steps to set up the project locally:
-
-Clone the repository:
-
+Line-by-Line Explanation
+1. Shebang and Comments
 bash
 Copy
-git clone https://github.com/moloned/ubiais.git
-cd ubiais
-Install dependencies:
-[Provide commands or steps to install dependencies, if applicable.]
+#!/bin/bash
+#
+# https://github.com/jvde-github/AIS-catcher
+# https://github.com/abcd567a/install-aiscatcher
+# https://docs.aiscatcher.org/installation/ubuntu-debian/
+#!/bin/bash: Specifies that the script should be run using the Bash shell.
 
+The comments provide links to the AIS-Catcher GitHub repository, an installation script, and official documentation.
+
+2. Update and Upgrade System
 bash
 Copy
-npm install  # Example for a Node.js project
-Configure the environment:
-[Explain how to set up environment variables or configuration files, if needed.]
+sudo apt update
+sudo apt upgrade
+Updates the package list (sudo apt update).
 
-Run the project:
-[Provide instructions to run the project.]
+Upgrades installed packages to their latest versions (sudo apt upgrade).
 
+3. Install Git
 bash
 Copy
-npm start  # Example for a Node.js project
-Usage
-[Explain how to use the project. Include examples, screenshots, or code snippets if applicable.]
+sudo apt install git
+Installs Git, a version control system, which may be required for downloading or managing repositories.
 
-Example
-python
-Copy
-# Example code snippet
-def hello_world():
-    print("Hello, Ubiais!")
-Contributing
-We welcome contributions! If you'd like to contribute to this project, please follow these steps:
-
-Fork the repository.
-
-Create a new branch for your feature or bugfix:
-
+4. Install AIS-Catcher
 bash
 Copy
-git checkout -b feature/your-feature-name
-Commit your changes:
+sudo bash -c "$(wget -O - https://raw.githubusercontent.com/abcd567a/install-aiscatcher/master/install-aiscatcher.sh)"
+Downloads and runs the install-aiscatcher.sh script from the abcd567a/install-aiscatcher GitHub repository.
 
+This script installs AIS-Catcher and its dependencies.
+
+5. Test AIS-Catcher Installation
 bash
 Copy
-git commit -m "Add your commit message here"
-Push your branch:
+AIS-catcher -L # test installation
+Runs the AIS-catcher command with the -L flag to list available devices.
 
+This is a quick test to ensure the installation was successful.
+
+6. Compile usbreset Utility
 bash
 Copy
-git push origin feature/your-feature-name
-Open a pull request and describe your changes.
+cc -o usbreset usbreset.c
+Compiles a C program (usbreset.c) into an executable named usbreset.
 
-Please ensure your code follows the project's coding standards and includes appropriate tests.
+This utility is likely used to reset USB devices, which may be necessary for AIS-Catcher to function properly.
 
-License
-This project is licensed under the [License Name] - see the LICENSE file for details.
+7. Copy Configuration Files
+bash
+Copy
+sudo cp ubiais.service /etc/systemd/system
+sudo cp ubiais-script.sh /usr/local/bin
+sudo cp aiscatcher.conf /usr/share/aiscatcher
+Copies three files to their respective locations:
 
-Acknowledgments
-[List any acknowledgments, inspirations, or dependencies here.]
+ubiais.service: A systemd service file to manage AIS-Catcher as a background service.
 
-Contact
-If you have any questions or suggestions, feel free to reach out:
+ubiais-script.sh: A script that likely contains commands to start AIS-Catcher.
 
-Author: [Your Name]
+aiscatcher.conf: A configuration file for AIS-Catcher.
 
-Email: [Your Email]
+8. Set Up and Enable System Service
+bash
+Copy
+sudo systemctl start ubiais.service
+sudo systemctl daemon-reload
+sudo systemctl enable ubiais.service
+sudo systemctl status ubiais.service
+sudo systemctl start ubiais.service: Starts the ubiais.service.
 
-GitHub: [Your GitHub Profile]
+sudo systemctl daemon-reload: Reloads the systemd manager configuration to apply changes.
 
-You can copy this template into a new README.md file in your repository and customize it as needed. Let me know if you'd like help with any specific section!
+sudo systemctl enable ubiais.service: Ensures the service starts automatically on system boot.
+
+sudo systemctl status ubiais.service: Displays the status of the service to verify it is running correctly.
+
+Summary
+This script automates the installation and configuration of AIS-Catcher, making it easy to set up and run the software as a system service. It handles dependencies, compiles utilities, and ensures the service is enabled and running.
