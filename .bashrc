@@ -134,3 +134,4 @@ alias n2='nc -vu data.aishub.net 3546'
 alias n3='nc -vu hub.shipxplorer.com 58656'
 alias n4='nc -vu 195.201.71.220 6902'
 
+loginctl enable-linger
